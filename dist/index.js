@@ -57,11 +57,12 @@ function run() {
             const rows = commits.data
                 .filter(e => new Date(e.commit.author.date) > past)
                 .map(e => {
+                var _a;
                 const { message } = e.commit;
-                const linebreak = message.indexOf('\n') + 1;
+                const linebreak = ((_a = message.indexOf('\n')) !== null && _a !== void 0 ? _a : message.length) + 1;
                 const firstLine = message.slice(0, linebreak);
-                if (firstLine.length > 80)
-                    return firstLine.slice(0, 80) + ' ...';
+                if (firstLine.length > 70)
+                    return firstLine.slice(0, 70) + ' ...';
                 return firstLine;
             });
             const tableStart = '| Commit message |\n|---|';
