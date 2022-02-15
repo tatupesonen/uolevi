@@ -1,6 +1,6 @@
 {
   "name": "kooste",
-  "version": "0.0.0",
+  "version": "1.0.3",
   "private": false,
   "description": "GitHub action to get a summary of a repo's commits",
   "main": "lib/main.js",
