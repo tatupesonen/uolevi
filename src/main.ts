@@ -20,7 +20,7 @@ async function run(): Promise<void> {
 		})
 
 		// Filter to commits in past numDays days
-		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past);
+		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past).map(e => e.commit.message);
 		const issue = await octoKit.rest.issues.create({
 			...context.repo,
 			title: format(now, "dd-mm-yyyy"),
