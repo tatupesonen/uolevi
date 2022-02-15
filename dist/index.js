@@ -59,8 +59,10 @@ function run() {
                 .map(e => {
                 var _a;
                 const { message } = e.commit;
+                console.log(message);
                 const linebreak = ((_a = message.indexOf('\n')) !== null && _a !== void 0 ? _a : message.length) + 1;
                 const firstLine = message.slice(0, linebreak);
+                console.log(firstLine);
                 if (firstLine.length > 70)
                     return firstLine.slice(0, 70) + ' ...';
                 return firstLine;
@@ -69,6 +71,7 @@ function run() {
             const tableRows = rows.map(e => `| ${e} |`);
             const tableContent = tableRows.join('\n');
             const table = `${tableStart}\n${tableContent}`;
+            console.log(table);
             yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, 'dd-MM-yyyy'), body: `Commits between ${(0, format_1.default)(past, 'dd-MM-yyyy')} - ${(0, format_1.default)(now, 'dd-MM-yyyy')}:\n${table}`, labels: [{ name: 'Kooste' }] }));
         }
         catch (error) {
