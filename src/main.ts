@@ -17,6 +17,7 @@ async function run(): Promise<void> {
 		
 		const commits = await octoKit.rest.repos.listCommits({
 			...context.repo,
+			sha: "main"
 		})
 
 		// Filter to commits in past numDays days
