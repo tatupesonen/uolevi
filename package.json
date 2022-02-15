@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "kooste",
   "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript template action",
+  "private": false,
+  "description": "GitHub action to get a summary of a repo's commits",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -11,11 +11,11 @@
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "npm run build && npm run format && npm run package"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/tatupesonen/kooste.git"
   },
   "keywords": [
     "actions",
