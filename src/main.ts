@@ -9,8 +9,8 @@ async function run(): Promise<void> {
 		const token: string = core.getInput('token')
 		const numDays = parseInt(days);
 
-		const octoKit = github.getOctokit(token);
 		const context = github.context;
+		const octoKit = github.getOctokit(token);
 
 		const now = Date.now();
 		const past = subDays(now, numDays);
@@ -23,7 +23,7 @@ async function run(): Promise<void> {
 		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past);
 		const issue = await octoKit.rest.issues.create({
 			...context.repo,
-			title: format(now, "dd-MM-YYYY"),
+			title: format(now, "dd-mm-yyyy"),
 			body: `Testing issue body. Commits: ${JSON.stringify(rows)}`
 		})	
 
