@@ -52,14 +52,23 @@ function run() {
             const octoKit = github.getOctokit(token);
             const now = Date.now();
             const past = (0, date_fns_1.subDays)(now, numDays);
-            const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: "main" }));
+            const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: 'main' }));
             // Filter to commits in past numDays days
-            const rows = commits.data.filter(e => new Date(e.commit.author.date) > past).map(e => e.commit.message.length > 50 ? e.commit.message.substring(0, 50) + " ..." : e.commit.message);
-            const tableStart = "|   |   |\n|---|---|";
+            const rows = commits.data
+                .filter(e => new Date(e.commit.author.date) > past)
+                .map(e => {
+                const { message } = e.commit;
+                const linebreak = message.indexOf('\n');
+                const firstLine = message.slice(0, linebreak);
+                if (firstLine.length > 46)
+                    return firstLine.slice(0, 46) + ' ...';
+                return firstLine;
+            });
+            const tableStart = '|   |   |\n|---|---|';
             const tableRows = rows.map(e => `| ${e} |`);
-            const tableContent = tableRows.join("\n");
+            const tableContent = tableRows.join('\n');
             const table = `${tableStart}\n${tableContent}`;
-            yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-MM-yyyy"), body: `Commits between ${(0, format_1.default)(past, "dd-MM-yyyy")} - ${(0, format_1.default)(now, "dd-MM-yyyy")}:\n${table}`, labels: [{ name: "Kooste" }] }));
+            yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, 'dd-MM-yyyy'), body: `Commits between ${(0, format_1.default)(past, 'dd-MM-yyyy')} - ${(0, format_1.default)(now, 'dd-MM-yyyy')}:\n${table}`, labels: [{ name: 'Kooste' }] }));
         }
         catch (error) {
             if (error instanceof Error)
