@@ -46,7 +46,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const days = core.getInput('days');
-            const token = core.getInput("repo-token");
+            const token = core.getInput("TOKEN");
             const numDays = parseInt(days);
             const octoKit = github.getOctokit(token);
             const context = github.context;
