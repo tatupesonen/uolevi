@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 async function run(): Promise<void> {
   try {
     const days: string = core.getInput('days');
-		const token: string = core.getInput("repo-token")
+		const token: string = core.getInput("TOKEN")
 		const numDays = parseInt(days);
 
 		const octoKit = github.getOctokit(token);
