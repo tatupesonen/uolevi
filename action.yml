@@ -1,4 +1,4 @@
-name: 'uolevi'
+name: 'uolevi-action'
 description: 'Create a summary of commits in a repo'
 author: 'Tatu Pesonen'
 inputs:
