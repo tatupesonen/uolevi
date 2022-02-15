@@ -20,15 +20,13 @@ async function run(): Promise<void> {
 		})
 
 		// Filter to commits in past numDays days
-		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past).map(e => e.commit.message);
+		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past).map(e => e.commit.message.length > 50 ? e.commit.message.substring(0, 50) + " ..." : e.commit.message);
 
-		const tableStart = 
-		`
-		|   |   |
-		|---|---|
-		`
-
-		const table = `${tableStart}\n${rows.map(e => `| ${e} |`).join("\n")}`;
+		const tableStart = "|   |   |\n|---|---|";
+		const tableRows = rows.map(e => `| ${e} |`)
+		const tableContent = tableRows.join("\n");
+		const table = `${tableStart}\n${tableContent}`
+	
 		await octoKit.rest.issues.create({
 			...context.repo,
 			title: format(now, "dd-MM-yyyy"),
