@@ -7,6 +7,7 @@ async function run(): Promise<void> {
   try {
     const days: string = core.getInput('days')
     const token: string = core.getInput('token')
+    const branch: string = core.getInput('branch')
     const numDays = parseInt(days)
 
     const context = github.context
@@ -17,7 +18,7 @@ async function run(): Promise<void> {
 
     const commits = await octoKit.rest.repos.listCommits({
       ...context.repo,
-      sha: 'main'
+      sha: branch
     })
 
     // Filter to commits in past numDays days

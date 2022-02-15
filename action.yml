@@ -9,6 +9,10 @@ inputs:
   token:
     required: true
     description: 'GitHub Token'
+  branch:
+    required: true
+    description: 'Branch to track for changes.'
+    default: master
 runs:
   using: 'node16'
   main: 'dist/index.js'
