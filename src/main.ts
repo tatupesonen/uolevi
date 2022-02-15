@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {subDays} from 'date-fns'
+import {subMinutes} from 'date-fns'
 import format from 'date-fns/format'
 
 async function run(): Promise<void> {
@@ -13,7 +13,7 @@ async function run(): Promise<void> {
     const octoKit = github.getOctokit(token)
 
     const now = Date.now()
-    const past = subDays(now, numDays)
+    const past = subMinutes(now, numDays)
 
     const commits = await octoKit.rest.repos.listCommits({
       ...context.repo,

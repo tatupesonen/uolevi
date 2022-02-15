@@ -51,7 +51,7 @@ function run() {
             const context = github.context;
             const octoKit = github.getOctokit(token);
             const now = Date.now();
-            const past = (0, date_fns_1.subDays)(now, numDays);
+            const past = (0, date_fns_1.subMinutes)(now, numDays);
             const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: 'main' }));
             // Filter to commits in past numDays days
             const rows = commits.data
