@@ -60,7 +60,7 @@ function run() {
 		|---|---|
 		`;
             const table = `${tableStart}\n${rows.map(e => `| ${e} |`).join("\n")}`;
-            const issue = yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-MM-yyyy"), body: `Commits between ${(0, format_1.default)(past, "dd-MM-yyyy")} - ${(0, format_1.default)(now, "dd-MM-yyyy")}:\n${table}`, labels: [{ name: "Kooste" }] }));
+            yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-MM-yyyy"), body: `Commits between ${(0, format_1.default)(past, "dd-MM-yyyy")} - ${(0, format_1.default)(now, "dd-MM-yyyy")}:\n${table}`, labels: [{ name: "Kooste" }] }));
         }
         catch (error) {
             if (error instanceof Error)

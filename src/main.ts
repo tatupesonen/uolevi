@@ -29,7 +29,7 @@ async function run(): Promise<void> {
 		`
 
 		const table = `${tableStart}\n${rows.map(e => `| ${e} |`).join("\n")}`;
-		const issue = await octoKit.rest.issues.create({
+		await octoKit.rest.issues.create({
 			...context.repo,
 			title: format(now, "dd-MM-yyyy"),
 			body: `Commits between ${format(past, "dd-MM-yyyy")} - ${format(now, "dd-MM-yyyy")}:\n${table}`,
