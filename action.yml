@@ -1,11 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Kooste'
+description: 'Create a summary of commits in a repo'
+author: 'Tatu Pesonen'
 inputs:
-  milliseconds: # change this
+  days:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Number of days to look behind for commits'
+    default: 7
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
