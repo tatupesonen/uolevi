@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
-const github_1 = __importDefault(__nccwpck_require__(5438));
+const github = __importStar(__nccwpck_require__(5438));
 const date_fns_1 = __nccwpck_require__(3314);
 const format_1 = __importDefault(__nccwpck_require__(2168));
 function run() {
@@ -48,8 +48,8 @@ function run() {
             const days = core.getInput('days');
             const token = core.getInput("repo-token");
             const numDays = parseInt(days);
-            const octoKit = github_1.default.getOctokit(token);
-            const context = github_1.default.context;
+            const octoKit = github.getOctokit(token);
+            const context = github.context;
             const now = Date.now();
             const past = (0, date_fns_1.subDays)(now, numDays);
             const commits = yield octoKit.rest.repos.listCommits(Object.assign({}, context.repo));
