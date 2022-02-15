@@ -25,10 +25,7 @@ async function run(): Promise<void> {
       .filter(e => new Date(e.commit!.author!.date!) > past)
       .map(e => {
         const {message} = e.commit
-				console.log(message);
-        const linebreak = (message.indexOf('\n') ?? message.length) + 1
-        const firstLine = message.slice(0, linebreak)
-				console.log(firstLine);
+				const [firstLine] = message.split("\n");
         if (firstLine.length > 70) return firstLine.slice(0, 70) + ' ...'
         return firstLine
       })
@@ -37,7 +34,6 @@ async function run(): Promise<void> {
     const tableRows = rows.map(e => `| ${e} |`)
     const tableContent = tableRows.join('\n')
     const table = `${tableStart}\n${tableContent}`
-			console.log(table);
     await octoKit.rest.issues.create({
       ...context.repo,
       title: format(now, 'dd-MM-yyyy'),
