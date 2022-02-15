@@ -52,7 +52,7 @@ function run() {
             const octoKit = github.getOctokit(token);
             const now = Date.now();
             const past = (0, date_fns_1.subDays)(now, numDays);
-            const commits = yield octoKit.rest.repos.listCommits(Object.assign({}, context.repo));
+            const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: "main" }));
             // Filter to commits in past numDays days
             const rows = commits.data.filter(e => new Date(e.commit.author.date) > past).map(e => e.commit.message.length > 50 ? e.commit.message.substring(0, 50) + " ..." : e.commit.message);
             const tableStart = "|   |   |\n|---|---|";
