@@ -6,6 +6,9 @@ inputs:
     required: true
     description: 'Number of days to look behind for commits'
     default: 7
+  token:
+    required: true
+    description: 'GitHub Token'
 runs:
   using: 'node16'
   main: 'dist/index.js'
