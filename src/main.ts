@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import github from '@actions/github'
+import * as github from '@actions/github'
 import { subDays } from "date-fns";
 import format from 'date-fns/format';
 
