@@ -55,7 +55,12 @@ function run() {
             const commits = yield octoKit.rest.repos.listCommits(Object.assign({}, context.repo));
             // Filter to commits in past numDays days
             const rows = commits.data.filter(e => new Date(e.commit.author.date) > past).map(e => e.commit.message);
-            const issue = yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-mm-yyyy"), body: `Testing issue body. Commits: ${JSON.stringify(rows)}` }));
+            const tableStart = `
+		|   |   |
+		|---|---|
+		`;
+            const table = `${tableStart}\n${rows.map(e => `| ${e} |`).join("\n")}`;
+            const issue = yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-MM-yyyy"), body: `Commits between ${(0, format_1.default)(past, "dd-MM-yyyy")} - ${(0, format_1.default)(now, "dd-MM-yyyy")}:\n${table}`, labels: [{ name: "Kooste" }] }));
         }
         catch (error) {
             if (error instanceof Error)

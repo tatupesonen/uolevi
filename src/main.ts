@@ -21,10 +21,19 @@ async function run(): Promise<void> {
 
 		// Filter to commits in past numDays days
 		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past).map(e => e.commit.message);
+
+		const tableStart = 
+		`
+		|   |   |
+		|---|---|
+		`
+
+		const table = `${tableStart}\n${rows.map(e => `| ${e} |`).join("\n")}`;
 		const issue = await octoKit.rest.issues.create({
 			...context.repo,
-			title: format(now, "dd-mm-yyyy"),
-			body: `Testing issue body. Commits: ${JSON.stringify(rows)}`
+			title: format(now, "dd-MM-yyyy"),
+			body: `Commits between ${format(past, "dd-MM-yyyy")} - ${format(now, "dd-MM-yyyy")}:\n${table}`,
+			labels: [{name: "Kooste"}]
 		})	
 
   } catch (error) {
