@@ -47,12 +47,13 @@ function run() {
         try {
             const days = core.getInput('days');
             const token = core.getInput('token');
+            const branch = core.getInput('branch');
             const numDays = parseInt(days);
             const context = github.context;
             const octoKit = github.getOctokit(token);
             const now = Date.now();
             const past = (0, date_fns_1.subDays)(now, numDays);
-            const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: 'main' }));
+            const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: branch }));
             // Filter to commits in past numDays days
             const rows = commits.data
                 .filter(e => new Date(e.commit.author.date) > past)
