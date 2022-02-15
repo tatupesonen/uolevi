@@ -25,13 +25,13 @@ async function run(): Promise<void> {
       .filter(e => new Date(e.commit!.author!.date!) > past)
       .map(e => {
         const {message} = e.commit
-        const linebreak = message.indexOf('\n')
+        const linebreak = message.indexOf('\n') + 1
         const firstLine = message.slice(0, linebreak)
-        if (firstLine.length > 46) return firstLine.slice(0, 46) + ' ...'
+        if (firstLine.length > 80) return firstLine.slice(0, 80) + ' ...'
         return firstLine
       })
 
-    const tableStart = '|   |   |\n|---|---|'
+    const tableStart = '| Commit message |\n|---|'
     const tableRows = rows.map(e => `| ${e} |`)
     const tableContent = tableRows.join('\n')
     const table = `${tableStart}\n${tableContent}`
