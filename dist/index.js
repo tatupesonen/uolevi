@@ -51,14 +51,14 @@ function run() {
             const context = github.context;
             const octoKit = github.getOctokit(token);
             const now = Date.now();
-            const past = (0, date_fns_1.subMinutes)(now, numDays);
+            const past = (0, date_fns_1.subDays)(now, numDays);
             const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: 'main' }));
             // Filter to commits in past numDays days
             const rows = commits.data
                 .filter(e => new Date(e.commit.author.date) > past)
                 .map(e => {
                 const { message } = e.commit;
-                const [firstLine] = message.split("\n");
+                const [firstLine] = message.split('\n');
                 if (firstLine.length > 70)
                     return firstLine.slice(0, 70) + ' ...';
                 return firstLine;
