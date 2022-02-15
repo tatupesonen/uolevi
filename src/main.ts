@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 async function run(): Promise<void> {
   try {
     const days: string = core.getInput('days');
-		const token: string = core.getInput("TOKEN")
+		const token: string = core.getInput('token')
 		const numDays = parseInt(days);
 
 		const octoKit = github.getOctokit(token);
@@ -23,7 +23,7 @@ async function run(): Promise<void> {
 		const rows = commits.data.filter(e => new Date(e.commit!.author!.date!) > past);
 		const issue = await octoKit.rest.issues.create({
 			...context.repo,
-			title: format(now, "DD-MM-YYYY"),
+			title: format(now, "dd-MM-YYYY"),
 			body: `Testing issue body. Commits: ${JSON.stringify(rows)}`
 		})	
 

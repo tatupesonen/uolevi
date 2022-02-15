@@ -46,7 +46,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const days = core.getInput('days');
-            const token = core.getInput("TOKEN");
+            const token = core.getInput('token');
             const numDays = parseInt(days);
             const octoKit = github.getOctokit(token);
             const context = github.context;
@@ -55,7 +55,7 @@ function run() {
             const commits = yield octoKit.rest.repos.listCommits(Object.assign({}, context.repo));
             // Filter to commits in past numDays days
             const rows = commits.data.filter(e => new Date(e.commit.author.date) > past);
-            const issue = yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "DD-MM-YYYY"), body: `Testing issue body. Commits: ${JSON.stringify(rows)}` }));
+            const issue = yield octoKit.rest.issues.create(Object.assign(Object.assign({}, context.repo), { title: (0, format_1.default)(now, "dd-MM-YYYY"), body: `Testing issue body. Commits: ${JSON.stringify(rows)}` }));
         }
         catch (error) {
             if (error instanceof Error)
