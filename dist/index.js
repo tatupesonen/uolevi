@@ -54,15 +54,20 @@ function run() {
             const now = Date.now();
             const past = (0, date_fns_1.subDays)(now, numDays);
             const commits = yield octoKit.rest.repos.listCommits(Object.assign(Object.assign({}, context.repo), { sha: branch }));
+            // thank you sindresorhus
+            // https://github.com/sindresorhus/issue-regex/blob/main/index.js
+            const issueRegex = /(?:(?<![/\w-.])\w[\w-.]+?\/\w[\w-.]+?|\B)#[1-9]\d*?\b/g;
             // Filter to commits in past numDays days
             const rows = commits.data
                 .filter(e => new Date(e.commit.author.date) > past)
                 .map(e => {
+                var _a, _b;
                 const { message } = e.commit;
+                const issue = message.match(issueRegex);
                 const [firstLine] = message.split('\n');
                 if (firstLine.length > 70)
-                    return firstLine.slice(0, 70) + ' ...';
-                return firstLine;
+                    return `(${(_a = issue[0]) !== null && _a !== void 0 ? _a : "No issue"}) ` + firstLine.slice(0, 70) + ' ...';
+                return `(${(_b = issue[0]) !== null && _b !== void 0 ? _b : "No issue"}) ` + firstLine;
             });
             const tableStart = '| Commit message |\n|---|';
             const tableRows = rows.map(e => `| ${e} |`);
