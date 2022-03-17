@@ -33,7 +33,7 @@ async function run(): Promise<void> {
 				const issue = message.match(issueRegex);
         const [firstLine] = message.split('\n')
         if (firstLine.length > 70) return `(${issue![0] ?? "No issue"}) ` + firstLine.slice(0, 70) + ' ...'
-        return firstLine
+        return `(${issue![0] ?? "No issue"}) ` + firstLine
       })
 
     const tableStart = '| Commit message |\n|---|'
