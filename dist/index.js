@@ -61,13 +61,13 @@ function run() {
             const rows = commits.data
                 .filter(e => new Date(e.commit.author.date) > past)
                 .map(e => {
-                var _a, _b;
                 const { message } = e.commit;
                 const issue = message.match(issueRegex);
+                const issueNum = issue ? issue[0] : "No issue";
                 const [firstLine] = message.split('\n');
                 if (firstLine.length > 70)
-                    return `(${(_a = issue[0]) !== null && _a !== void 0 ? _a : "No issue"}) ` + firstLine.slice(0, 70) + ' ...';
-                return `(${(_b = issue[0]) !== null && _b !== void 0 ? _b : "No issue"}) ` + firstLine;
+                    return `(${issueNum}"}) ` + firstLine.slice(0, 70) + ' ...';
+                return `(${issueNum}) ` + firstLine;
             });
             const tableStart = '| Commit message |\n|---|';
             const tableRows = rows.map(e => `| ${e} |`);
