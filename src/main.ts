@@ -21,13 +21,18 @@ async function run(): Promise<void> {
       sha: branch
     })
 
+		// thank you sindresorhus
+		// https://github.com/sindresorhus/issue-regex/blob/main/index.js
+		const issueRegex = /(?:(?<![/\w-.])\w[\w-.]+?\/\w[\w-.]+?|\B)#[1-9]\d*?\b/g;
+
     // Filter to commits in past numDays days
     const rows = commits.data
       .filter(e => new Date(e.commit!.author!.date!) > past)
       .map(e => {
         const {message} = e.commit
+				const issue = message.match(issueRegex);
         const [firstLine] = message.split('\n')
-        if (firstLine.length > 70) return firstLine.slice(0, 70) + ' ...'
+        if (firstLine.length > 70) return `(${issue![0] ?? "No issue"}) ` + firstLine.slice(0, 70) + ' ...'
         return firstLine
       })
 
